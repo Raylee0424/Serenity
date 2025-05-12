@@ -1,6 +1,16 @@
 import SwiftUI
 
+enum Tab {
+    case home
+    case article
+    case music
+    case profile
+}
+
 struct TabBarView: View {
+    
+    @Binding var selectedTab: Tab
+    
     var body: some View {
         ZStack {
             Image(systemName: "plus")
@@ -19,13 +29,13 @@ struct TabBarView: View {
             .frame(width: 490, height: 140)
             
             HStack (spacing: 140) {
-                HStack (spacing: 45){
-                    icon(icon: "Monotone-Home")
-                    icon(icon: "Monotone-News")
+                HStack(spacing: 45) {
+                    tabButton(icon: "Monotone-Home", tab: .home)
+                    tabButton(icon: "Monotone-News", tab: .article)
                 }
-                HStack (spacing: 45){
-                    icon(icon: "Monotone-Music")
-                    icon(icon: "Monotone-Profile")
+                HStack(spacing: 45) {
+                    tabButton(icon: "Monotone-Music", tab: .music)
+                    tabButton(icon: "Monotone-Profile", tab: .profile)
                 }
             }
             .offset(y: 17)
@@ -33,6 +43,18 @@ struct TabBarView: View {
         .offset(y: 15)
         .edgesIgnoringSafeArea(.all)
     }
+    
+    func tabButton(icon: String, tab: Tab) -> some View {
+            Button(action: {
+                selectedTab = tab
+            }) {
+                Image(icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(selectedTab == tab ? 1.0 : 0.5)
+            }
+        }
 }
 
 struct icon: View {
@@ -47,11 +69,32 @@ struct icon: View {
     }
 }
 
-#Preview {
-    ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
-            VStack {
-                TabBarView()
+struct TabViewModel: View {
+    @StateObject private var userData = UserData()
+    @State private var selectedTab: Tab = .home
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Group {
+                switch selectedTab {
+                case .home:
+                    Text("Home View")
+                case .article:
+                    ArticleView()
+                case .music:
+                    ExerciseView()
+                case .profile:
+                    ProfileView(userData: userData)
+                }
             }
+            Spacer()
+            TabBarView(selectedTab: $selectedTab)
         }
+        .edgesIgnoringSafeArea(.bottom)
+        .background(Color("WhiteBackground"))
+    }
+}
+
+#Preview {
+    TabViewModel()
 }

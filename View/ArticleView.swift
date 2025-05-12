@@ -105,7 +105,7 @@ struct ArticleView: View {
                 }
             }
             
-            TabBarView()
+//            TabBarView()
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))

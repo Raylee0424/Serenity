@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @ObservedObject var userData: UserData
+    
     var body: some View {
         VStack {
             ZStack {
@@ -13,7 +15,7 @@ struct ProfileView: View {
                         .font(Font.custom("Righteous", size: 25))
                         .lineSpacing(32)
                         .foregroundColor(.white)
-                    Text(verbatim: "luminegenshin@gmail.com")
+                    Text(userData.email)
                         .font(Font.custom("Righteous", size: 15))
                         .foregroundColor(.white)
                     Text("Beijing, China")
@@ -44,13 +46,23 @@ struct ProfileView: View {
                 CloseAccountView()
             }
             
-            TabBarView()
+//            TabBarView()
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))
     }
 }
 
-#Preview {
-    ProfileView()
+struct ProfileContentView: View {
+    @StateObject private var userData = UserData()
+
+    var body: some View {
+        NavigationStack {
+            ProfileView(userData: userData)
+        }
+    }
+}
+
+#Preview{
+    ProfileContentView()
 }

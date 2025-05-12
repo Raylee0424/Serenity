@@ -127,8 +127,6 @@ struct ExerciseView: View {
               color: Color(red: 0.29, green: 0.20, blue: 0.15, opacity: 0.05), radius: 18.36, y: 9.18
             )
             
-            Spacer()
-            TabBarView()
         }
         .edgesIgnoringSafeArea(.bottom)
         .background(Color("WhiteBackground"))
