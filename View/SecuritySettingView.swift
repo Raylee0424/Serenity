@@ -19,19 +19,19 @@ struct SecuritySettingView: View {
                 .padding(.bottom, 23)
                 
                 VStack(spacing: 20) {
-                    SecurityInputFieldView(text: .constant(""),
+                    InputFieldRoundedView(text: .constant(""),
                                            title: "Current Password",
                                            inputLogo: "Monotone-Lock",
                                            placeholder: "Enter current password",
                                            rightLogo: "Monotone-Edit")
                     
-                    SecurityInputFieldView(text: .constant(""),
+                    InputFieldRoundedView(text: .constant(""),
                                            title: "New Password",
                                            inputLogo: "Monotone-Lock",
                                            placeholder: "Enter new password",
                                            rightLogo: "Monotone-Edit")
                     
-                    SecurityInputFieldView(text: .constant(""),
+                    InputFieldRoundedView(text: .constant(""),
                                            title: "Confirm New Password",
                                            inputLogo: "Monotone-Lock",
                                            placeholder: "Enter new password",
@@ -40,7 +40,7 @@ struct SecuritySettingView: View {
                 
                 Spacer()
                 
-                SaveSettingButtonView()
+                RoundedButtonView(text: "Save Settings")
             }
         }
         .edgesIgnoringSafeArea(.all)

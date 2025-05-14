@@ -1,11 +1,14 @@
 import SwiftUI
 
-struct SaveSettingButtonView: View {
+struct RoundedButtonView: View {
+    
+    var text: String
+    
     var body: some View {
         VStack {
             HStack(spacing: 32) {
                 HStack(spacing: 16) {
-                    Text("Save Settings")
+                    Text(text)
                         .font(Font.custom("Righteous", size: 18).weight(.heavy))
                         .foregroundColor(.white)
                     Image("Monotone-Right-Arrow")
@@ -24,5 +27,5 @@ struct SaveSettingButtonView: View {
 }
 
 #Preview {
-    SaveSettingButtonView()
+    RoundedButtonView(text: "Save Settings")
 }

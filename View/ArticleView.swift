@@ -61,7 +61,7 @@ struct ArticleView: View {
             .cornerRadius(50)
             .padding(.bottom, 10)
             
-            VStack(spacing: 19) {
+            VStack(spacing: 15) {
                 HStack {
                     Text("All Articles")
                         .font(Font.custom("Righteous", size: 20.66).weight(.heavy))

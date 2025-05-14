@@ -4,7 +4,7 @@ struct ProfileView: View {
     @ObservedObject var userData: UserData
     
     var body: some View {
-        VStack {
+        VStack(spacing: 6) {
             ZStack {
                 VStack(spacing: 4) {
                     Image("ProfilePic")
@@ -45,8 +45,6 @@ struct ProfileView: View {
                 GeneralSettingButtonView(icon: "Monotone-LogOut", title: "Log Out")
                 CloseAccountView()
             }
-            
-//            TabBarView()
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))

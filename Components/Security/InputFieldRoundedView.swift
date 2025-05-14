@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SecurityInputFieldView: View {
+struct InputFieldRoundedView: View {
     
     @Binding var text: String
     var title: String
@@ -19,7 +19,8 @@ struct SecurityInputFieldView: View {
                         HStack(spacing: 9.15) {
                             Image(inputLogo)
                                 .resizable()
-                                .frame(width: 22.86, height: 20.58)
+                                .scaledToFit()
+                                .frame(width: 23, height: 23)
                             
                             SecureField(placeholder, text: $text)
                                 .font(Font.custom("Righteous", size: 16.01))
@@ -28,6 +29,7 @@ struct SecurityInputFieldView: View {
                         .frame(width: 290, alignment: .leading)
                         Image(rightLogo)
                             .resizable()
+                            .scaledToFit()
                             .frame(width: 24, height: 24)
                     }
                 }
@@ -45,6 +47,6 @@ struct SecurityInputFieldView: View {
 }
 
 #Preview {
-    SecurityInputFieldView(text: .constant(""), title: "Text", inputLogo: "Monotone-Lock", placeholder: "Sample", rightLogo: "Monotone-Edit")
+    InputFieldRoundedView(text: .constant(""), title: "Text", inputLogo: "Monotone-Lock", placeholder: "Sample", rightLogo: "Monotone-Edit")
 }
 

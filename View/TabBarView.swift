@@ -78,7 +78,7 @@ struct TabViewModel: View {
             Group {
                 switch selectedTab {
                 case .home:
-                    Text("Home View")
+                    HomeView()
                 case .article:
                     ArticleView()
                 case .music:

@@ -67,7 +67,7 @@ struct EditProfileView: View {
                 }
                 Spacer()
                 
-                SaveSettingButtonView()
+                RoundedButtonView(text: "Save Settings")
             }
             .frame(width: 430)
             

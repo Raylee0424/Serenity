@@ -13,7 +13,7 @@ struct ExerciseView: View {
                     color: Color(red: 0.29, green: 0.20, blue: 0.15, opacity: 0.05), radius: 0
                     )
                     .padding(.top, 15)
-                VStack(spacing: 18.36) {
+                VStack(spacing: 20) {
                     Image("Disc")
                         .resizable()
                         .frame(width: 248.78, height: 247.90)

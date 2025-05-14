@@ -44,7 +44,7 @@ struct NotificationView: View {
                 
                 Spacer()
                 
-                SaveSettingButtonView()
+                RoundedButtonView(text: "Save Settings")
             }
         }
         .edgesIgnoringSafeArea(.all)

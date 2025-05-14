@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ProfileInputFieldView: View {
+    
     @Binding var text: String
     var title: String
     var placeholder: String
