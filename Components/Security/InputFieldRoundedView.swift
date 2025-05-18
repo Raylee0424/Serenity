@@ -7,6 +7,7 @@ struct InputFieldRoundedView: View {
     var inputLogo: String
     var placeholder: String
     var rightLogo: String
+    var isSecureField = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 9.15) {
@@ -22,9 +23,15 @@ struct InputFieldRoundedView: View {
                                 .scaledToFit()
                                 .frame(width: 23, height: 23)
                             
-                            SecureField(placeholder, text: $text)
-                                .font(Font.custom("Righteous", size: 16.01))
-                                .foregroundColor(Color("DefaultTextColor"))
+                            if isSecureField {
+                                SecureField(placeholder, text: $text)
+                                    .font(Font.custom("Righteous", size: 16))
+                                    .foregroundColor(Color("DefaultTextColor"))
+                            } else {
+                                TextField(placeholder, text: $text)
+                                    .font(Font.custom("Righteous", size: 16))
+                                    .foregroundColor(Color("DefaultTextColor"))
+                            }
                         }
                         .frame(width: 290, alignment: .leading)
                         Image(rightLogo)

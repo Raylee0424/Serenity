@@ -29,7 +29,7 @@ struct HomeView: View {
                       .font(Font.custom("Righteous", size: 16))
                       .foregroundColor(Color("PrimaryTextColor"))
                     Spacer()
-                    Image("Solid-Horizontal")
+                    Image("Solid-Horizontal-Blue")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)

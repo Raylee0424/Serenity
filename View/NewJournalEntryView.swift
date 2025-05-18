@@ -4,8 +4,13 @@ let emotions = ["Happy", "Satisfied", "Neutral", "Sad", "Angry", "Tired"]
 
 struct NewJournalEntryView: View {
     
+    @State private var entryText = ""
+    
     var body: some View {
         ZStack {
+            Color("WhiteBackground")
+                .ignoresSafeArea()
+            
             VStack {
                 HStack(spacing: 12) {
                     Image("Back-Button-Black")
@@ -25,7 +30,8 @@ struct NewJournalEntryView: View {
                                           title: "Text",
                                           inputLogo: "Monotone-Document",
                                           placeholder: "Sample",
-                                          rightLogo: "Monotone-Edit")
+                                          rightLogo: "Monotone-Edit",
+                                          isSecureField: false)
                     
                     VStack(spacing: 12) {
                         HStack {
@@ -58,8 +64,6 @@ struct NewJournalEntryView: View {
             .padding(.horizontal, 15)
         }
         .edgesIgnoringSafeArea(.all)
-        .background(Color("WhiteBackground"))
-        
     }
 }
 

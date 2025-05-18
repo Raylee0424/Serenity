@@ -24,11 +24,11 @@ struct LoginInputFieldView: View {
 
                             if isSecureField {
                                 SecureField(placeholder, text: $text)
-                                    .font(Font.custom("Righteous", size: 16.01))
+                                    .font(Font.custom("Righteous", size: 16))
                                     .foregroundColor(Color("DefaultTextColor"))
                             } else {
                                 TextField(placeholder, text: $text)
-                                    .font(Font.custom("Righteous", size: 16.01))
+                                    .font(Font.custom("Righteous", size: 16))
                                     .foregroundColor(Color("DefaultTextColor"))
                             }
                         }
