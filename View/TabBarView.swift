@@ -10,6 +10,7 @@ enum Tab {
 struct TabBarView: View {
     
     @Binding var selectedTab: Tab
+    @State private var navigateToExercise = false  // Local navigation state
     
     var body: some View {
         ZStack {
@@ -70,7 +71,7 @@ struct icon: View {
 }
 
 struct TabViewModel: View {
-    @ObservedObject var userData: UserData
+    @ObservedObject var userData: UserData  // ✅ use the passed instance
     @State private var selectedTab: Tab = .home
 
     var body: some View {
@@ -79,13 +80,13 @@ struct TabViewModel: View {
                 Group {
                     switch selectedTab {
                     case .home:
-                        HomeView()
+                        HomeView(selectedTab: $selectedTab)
                     case .article:
                         ArticleView()
                     case .music:
                         ExerciseView()
                     case .profile:
-                        ProfileView(userData: userData)
+                        ProfileView(userData: userData)  // ✅ now shows correct email
                     }
                 }
                 Spacer()

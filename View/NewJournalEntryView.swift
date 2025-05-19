@@ -10,7 +10,6 @@ struct NewJournalEntryView: View {
         ZStack {
             Color("WhiteBackground")
                 .ignoresSafeArea()
-            
             VStack {
                 HStack(spacing: 12) {
                     Image("Back-Button-Black")

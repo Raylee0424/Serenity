@@ -1,20 +1,20 @@
 import SwiftUI
 
-//IMAGE, COLOR, TEXT
-
 struct JournalEntryPodView: View {
+    let entry: JournalDataModel
+    
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
                 HStack {
                     HStack {
-                        Image("Angry")
+                        Image(entry.mood.rawValue.capitalized)
                             .resizable()
                             .scaledToFit()
-                            .frame(width:27, height: 27)
+                            .frame(width: 27, height: 27)
                     }
                     .frame(width: 41, height: 41)
-                    .background(Color("RedBackground"))
+                    .background(Color(entry.colorName))
                     .cornerRadius(14)
                     
                     Spacer()
@@ -27,25 +27,25 @@ struct JournalEntryPodView: View {
                 
                 VStack(alignment: .leading, spacing: 7) {
                     HStack {
-                        Text("MOOD: ANGRY")
+                        Text("MOOD: \(entry.mood.rawValue.uppercased())")
                             .font(Font.custom("Righteous", size: 8.48).weight(.heavy))
                             .tracking(0.85)
-                            .foregroundColor(Color(red: 0.87, green: 0.25, blue: 0.27))
+                            .foregroundColor(Color(entry.colorName))
                     }
                     .padding(EdgeInsets(top: 5, leading: 8, bottom: 5, trailing: 8))
-                    .background(Color("RedBackground"))
+                    .background(Color(entry.colorName).opacity(0.2))
                     .cornerRadius(85)
                     
                     HStack {
-                        Text("Why Is It Always Me?")
-                          .font(Font.custom("Urbanist", size: 15.26).weight(.bold))
-                          .foregroundColor(Color("PrimaryTextColor"))
+                        Text(entry.title)
+                            .font(Font.custom("Urbanist", size: 15.26).weight(.bold))
+                            .foregroundColor(Color("PrimaryTextColor"))
                     }
                     
                     HStack {
-                        Text("Ugh. Today tested my patience in every way")
-                          .font(Font.custom("Urbanist", size: 10).weight(.medium))
-                          .foregroundColor(Color("DefaultTextColor"))
+                        Text(entry.content)
+                            .font(Font.custom("Urbanist", size: 10).weight(.medium))
+                            .foregroundColor(Color("DefaultTextColor"))
                     }
                 }
             }
@@ -59,5 +59,10 @@ struct JournalEntryPodView: View {
 }
 
 #Preview {
-    JournalEntryPodView()
+    JournalEntryPodView(entry: JournalDataModel(
+        title: "Sample Entry",
+        content: "This is a sample journal entry content",
+        mood: .happy,
+        date: Date()
+    ))
 }
