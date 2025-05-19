@@ -104,8 +104,8 @@ struct ArticleView: View {
                     .padding(.horizontal, 30)
                 }
             }
+            .padding(.horizontal, 30)
             
-//            TabBarView()
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))
