@@ -8,28 +8,32 @@ enum Tab {
 }
 
 struct TabBarView: View {
-    
     @Binding var selectedTab: Tab
-    @State private var navigateToExercise = false  // Local navigation state
+    var onPlusPressed: () -> Void
     
     var body: some View {
         ZStack {
-            Image(systemName: "plus")
-                .foregroundStyle(.white)
-                .frame(width: 40, height: 40)
-                .frame(width: 75, height: 75)
-                .background(Color(red: 0.20, green: 0.29, blue: 0.46))
-                .cornerRadius(1234)
-                .shadow(color: Color(red: 0.80, green: 0.87, blue: 0.95, opacity: 1), radius: 32, y: 16)
-                .offset(y: -40)
-            VStack {
-                Image("TabBarBackground")
+            // Plus Button
+            Button(action: onPlusPressed) {
+                Image("Plus-Button")
                     .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+                    .offset(y: 25)
+                    .contentShape(Rectangle()) // For proper hit testing
             }
-            .ignoresSafeArea()
-            .frame(width: 490, height: 140)
+            .buttonStyle(.plain)
+            .offset(y: -40)
+            .shadow(color: Color(red: 0.80, green: 0.87, blue: 0.95), radius: 32, y: 16)
             
-            HStack (spacing: 140) {
+            // Tab Bar Background
+            Image("TabBarBackground")
+                .resizable()
+                .ignoresSafeArea()
+                .frame(width: 490, height: 140)
+            
+            // Tab Buttons
+            HStack(spacing: 140) {
                 HStack(spacing: 45) {
                     tabButton(icon: "Monotone-Home", tab: .home)
                     tabButton(icon: "Monotone-News", tab: .article)
@@ -45,59 +49,62 @@ struct TabBarView: View {
         .edgesIgnoringSafeArea(.all)
     }
     
-    func tabButton(icon: String, tab: Tab) -> some View {
-            Button(action: {
-                selectedTab = tab
-            }) {
-                Image(icon)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-                    .opacity(selectedTab == tab ? 1.0 : 0.5)
-            }
+    private func tabButton(icon: String, tab: Tab) -> some View {
+        Button {
+            selectedTab = tab
+        } label: {
+            Image(icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+                .opacity(selectedTab == tab ? 1 : 0.5)
         }
-}
-
-struct icon: View {
-    
-    var icon: String
-    
-    var body: some View {
-        Image(icon)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 30, height: 30)
     }
 }
 
 struct TabViewModel: View {
-    @ObservedObject var userData: UserData  // ✅ use the passed instance
+    @ObservedObject var userData: UserData
     @State private var selectedTab: Tab = .home
-
+    @State private var showingNewJournal = false
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            ZStack {
+                // Main Content
                 Group {
                     switch selectedTab {
                     case .home:
                         HomeView(selectedTab: $selectedTab)
+                            .offset(y: -40)
                     case .article:
                         ArticleView()
+                            .offset(y: -40)
                     case .music:
                         ExerciseView()
                     case .profile:
-                        ProfileView(userData: userData)  // ✅ now shows correct email
+                        ProfileView(userData: userData)
+                            .offset(y: -40)
                     }
                 }
-                Spacer()
-                TabBarView(selectedTab: $selectedTab)
+                
+                // Tab Bar
+                VStack {
+                    Spacer()
+                    TabBarView(selectedTab: $selectedTab) {
+                        showingNewJournal = true
+                    }
+                }
             }
-            .edgesIgnoringSafeArea(.bottom)
+            .navigationDestination(isPresented: $showingNewJournal) {
+                NewJournalEntryView()
+                    .navigationBarBackButtonHidden()
+            }
+            .edgesIgnoringSafeArea(.all)
             .background(Color("WhiteBackground"))
         }
     }
 }
 
 #Preview {
-    TabViewModel(userData: UserData())  // ✅ preview needs a dummy
+    TabViewModel(userData: UserData())
 }
