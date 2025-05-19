@@ -154,10 +154,12 @@ struct HomeView: View {
                             .foregroundColor(Color(red: 0.44, green: 0.42, blue: 0.40))
                     }
                     
+                    // In HomeView.swift
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
-                            CommunityArticleView()
-                            CommunityArticleView()
+                            ForEach(sampleArticles) { article in
+                                CommunityArticleView(article: article)
+                            }
                         }
                     }
                 }
