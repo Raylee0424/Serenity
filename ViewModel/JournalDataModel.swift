@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum Mood: String, CaseIterable {
-    case angry, happy, sad, neutral, tired, satisfied // Added 'satisfied' case
+    case angry, happy, sad, neutral, tired, satisfied
 }
 
 struct JournalDataModel: Identifiable {
@@ -13,7 +13,7 @@ struct JournalDataModel: Identifiable {
     var colorName: String {
         switch mood {
         case .angry: return "RedBackground"
-        case .happy, .satisfied: return "GreenBackground" // Group happy/satisfied
+        case .happy, .satisfied: return "GreenBackground"
         case .sad: return "BlueBackground"
         case .neutral: return "GrayBackground"
         case .tired: return "YellowBackground"
@@ -21,8 +21,9 @@ struct JournalDataModel: Identifiable {
     }
 }
 
-class JournalDataManager: ObservableObject {
-    @Published var entries: [JournalDataModel] = [
+// Sample data container
+struct JournalData {
+    static let sampleEntries: [JournalDataModel] = [
         JournalDataModel(
             title: "Why Is It Always Me?",
             content: "Ugh. Today tested my patience in every way",
@@ -54,10 +55,4 @@ class JournalDataManager: ObservableObject {
             date: Date()
         )
     ]
-    
-    // Add new entry method
-    func addEntry(_ entry: JournalDataModel) {
-        entries.append(entry)
-        // For future persistence, add save-to-disk here
-    }
 }

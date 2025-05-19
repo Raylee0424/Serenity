@@ -2,7 +2,7 @@ import SwiftUI
 
 struct NewJournalEntryView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var journalData: JournalDataManager
+    @Binding var entries: [JournalDataModel]
     @State private var title = ""
     @State private var content = ""
     @State private var selectedEmotion: String?
@@ -11,11 +11,9 @@ struct NewJournalEntryView: View {
     
     var body: some View {
         ZStack {
-            Color("WhiteBackground")
-                .ignoresSafeArea()
+            Color("WhiteBackground").ignoresSafeArea()
             
             VStack {
-                // Header
                 HStack(spacing: 12) {
                     Button(action: { dismiss() }) {
                         Image("Back-Button-Black")
@@ -32,61 +30,34 @@ struct NewJournalEntryView: View {
                 }
                 .padding(.bottom, 26)
                 
-                // Content
                 VStack(spacing: 32) {
-                    // Title Input (Fixed parameters)
                     InputFieldRoundedView(
                         text: $title,
                         title: "Title",
                         inputLogo: "Monotone-Document",
                         placeholder: "Enter title...",
-                        rightLogo: "Monotone-Edit", // Added parameter
-                        isSecureField: false // Added parameter
+                        rightLogo: "Monotone-Edit",
+                        isSecureField: false
                     )
                     
-                    // Emotion Selection
-                    VStack(spacing: 12) {
-                        HStack {
-                            Text("Select Your Emotion")
-                                .font(.custom("Righteous", size: 14).weight(.heavy))
-                                .foregroundColor(Color("PrimaryTextColor"))
-                            Spacer()
-                        }
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 18) {
-                                ForEach(emotions, id: \.self) { emotion in
-                                    Button {
-                                        selectedEmotion = emotion
-                                    } label: {
-                                        Image(emotion)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 60, height: 60)
-                                            .opacity(selectedEmotion == emotion ? 1 : 0.5)
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    EmotionSelectionView(selectedEmotion: $selectedEmotion)
                     
-                    // Content Input
                     EntryFieldView(text: $content, placeholder: "Write your thoughts...")
                 }
                 .padding(.bottom, 30)
                 
-                // Save Button
                 Button(action: saveEntry) {
                     RoundedButtonView(text: "Create Journal")
                 }
             }
             .padding(.horizontal, 15)
         }
-        .edgesIgnoringSafeArea(.all)
     }
     
     private func saveEntry() {
-        guard !title.isEmpty, !content.isEmpty, let emotion = selectedEmotion else { return }
+        guard !title.isEmpty,
+              !content.isEmpty,
+              let emotion = selectedEmotion else { return }
         
         let newEntry = JournalDataModel(
             title: title,
@@ -95,7 +66,7 @@ struct NewJournalEntryView: View {
             date: Date()
         )
         
-        journalData.addEntry(newEntry)
+        entries.append(newEntry)
         dismiss()
     }
 }
@@ -133,6 +104,5 @@ struct EmotionSelectionView: View {
 }
 
 #Preview {
-    NewJournalEntryView()
-        .environmentObject(JournalDataManager())
+    NewJournalEntryView(entries: .constant(JournalData.sampleEntries))
 }

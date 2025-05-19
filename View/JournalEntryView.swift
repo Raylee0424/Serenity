@@ -2,7 +2,7 @@ import SwiftUI
 
 struct JournalEntryView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var dataManager: JournalDataManager
+    @Binding var entries: [JournalDataModel]
     
     var body: some View {
         ZStack {
@@ -29,7 +29,7 @@ struct JournalEntryView: View {
                     
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible())], spacing: 12) {
-                            ForEach(dataManager.entries) { entry in
+                            ForEach(entries) { entry in
                                 JournalEntryPodView(entry: entry)
                             }
                         }
@@ -47,5 +47,5 @@ struct JournalEntryView: View {
 }
 
 #Preview {
-    JournalEntryView()
+    JournalEntryView(entries: .constant(JournalData.sampleEntries))
 }

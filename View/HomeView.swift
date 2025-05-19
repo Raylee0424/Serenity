@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Binding var selectedTab: Tab
+    @Binding var entries: [JournalDataModel]
     @State private var showExerciseView = false
     @State private var showJournalEntries = false
     
@@ -167,7 +168,7 @@ struct HomeView: View {
                 ExerciseView()
             }
             .navigationDestination(isPresented: $showJournalEntries) {
-                JournalEntryView()
+                JournalEntryView(entries: $entries)
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -176,5 +177,8 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(selectedTab: .constant(.home))
+    HomeView(
+        selectedTab: .constant(.home),
+        entries: .constant(JournalData.sampleEntries)
+    )
 }

@@ -66,6 +66,7 @@ struct TabViewModel: View {
     @ObservedObject var userData: UserData
     @State private var selectedTab: Tab = .home
     @State private var showingNewJournal = false
+    @State private var entries: [JournalDataModel] = JournalData.sampleEntries
     
     var body: some View {
         NavigationStack {
@@ -74,8 +75,11 @@ struct TabViewModel: View {
                 Group {
                     switch selectedTab {
                     case .home:
-                        HomeView(selectedTab: $selectedTab)
-                            .offset(y: -40)
+                        HomeView(
+                            selectedTab: $selectedTab,
+                            entries: $entries
+                        )
+                        .offset(y: -40)
                     case .article:
                         ArticleView()
                             .offset(y: -40)
@@ -96,7 +100,7 @@ struct TabViewModel: View {
                 }
             }
             .navigationDestination(isPresented: $showingNewJournal) {
-                NewJournalEntryView()
+                NewJournalEntryView(entries: $entries)
                     .navigationBarBackButtonHidden()
             }
             .edgesIgnoringSafeArea(.all)
