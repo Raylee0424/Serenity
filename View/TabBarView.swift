@@ -70,7 +70,7 @@ struct icon: View {
 }
 
 struct TabViewModel: View {
-    @StateObject private var userData = UserData()
+    @ObservedObject var userData: UserData
     @State private var selectedTab: Tab = .home
 
     var body: some View {
@@ -98,5 +98,5 @@ struct TabViewModel: View {
 }
 
 #Preview {
-    TabViewModel()
+    TabViewModel(userData: UserData())  // ✅ preview needs a dummy
 }

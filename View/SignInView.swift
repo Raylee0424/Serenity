@@ -1,9 +1,16 @@
 import SwiftUI
 
 struct SignInView: View {
-    @StateObject private var viewModel = SignInViewModel()
+    @StateObject private var userData = UserData()
+    @StateObject private var viewModel: SignInViewModel
+    @State private var navigateToMainApp = false
     @State private var navigateToSignUp = false
-    @State private var navigateToMainApp = false  // 👈 Flag for navigating to TabBarView
+
+    init() {
+        let userData = UserData()
+        _userData = StateObject(wrappedValue: userData)
+        _viewModel = StateObject(wrappedValue: SignInViewModel(userData: userData))
+    }
 
     var body: some View {
         NavigationStack {
@@ -42,7 +49,7 @@ struct SignInView: View {
                     Button {
                         if viewModel.validateFields() {
                             viewModel.signIn()
-                            navigateToMainApp = true  // 👈 Trigger navigation
+                            navigateToMainApp = true
                         }
                     } label: {
                         LoginButtonView(title: "Sign In")
@@ -95,11 +102,11 @@ struct SignInView: View {
             .ignoresSafeArea()
             .background(Color("WhiteBackground"))
             .navigationDestination(isPresented: $navigateToSignUp) {
-                SignUpView(userData: UserData())
+                SignUpView(userData: userData)
                     .navigationBarBackButtonHidden(true)
             }
-            .navigationDestination(isPresented: $navigateToMainApp) {
-                TabViewModel()  // 👈 Main app view
+            .fullScreenCover(isPresented: $navigateToMainApp) {
+                TabViewModel(userData: userData)  // ✅ Pass userData here
                     .navigationBarBackButtonHidden(true)
             }
         }
