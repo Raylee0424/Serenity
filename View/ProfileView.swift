@@ -3,6 +3,10 @@ import SwiftUI
 struct ProfileView: View {
     @ObservedObject var userData: UserData
     
+    @State private var navigateToEditProfile = false
+    @State private var navigateToSecurity = false
+    @State private var navigateToNotification = false
+    
     var body: some View {
         VStack(spacing: 6) {
             ZStack {
@@ -39,15 +43,43 @@ struct ProfileView: View {
             .frame(width: 398)
             
             VStack(alignment: .leading, spacing: 12) {
-                GeneralSettingButtonView(icon: "Monotone-Profile", title: "Edit Profile")
-                GeneralSettingButtonView(icon: "Monotone-Lock", title: "Security")
-                GeneralSettingButtonView(icon: "Monotone-Bell", title: "Notifications")
+                Button {
+                    navigateToEditProfile = true
+                } label: {
+                    GeneralSettingButtonView(icon: "Monotone-Profile", title: "Edit Profile")
+                }
+
+                Button {
+                    navigateToSecurity = true
+                } label: {
+                    GeneralSettingButtonView(icon: "Monotone-Lock", title: "Security")
+                }
+
+                Button {
+                    navigateToNotification = true
+                } label: {
+                    GeneralSettingButtonView(icon: "Monotone-Bell", title: "Notifications")
+                }
+                
                 GeneralSettingButtonView(icon: "Monotone-LogOut", title: "Log Out")
                 CloseAccountView()
             }
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))
+        
+        .navigationDestination(isPresented: $navigateToEditProfile) {
+            EditProfileView(userData: userData)
+                .navigationBarBackButtonHidden(false)
+        }
+        .navigationDestination(isPresented: $navigateToSecurity) {
+            SecuritySettingView()
+                .navigationBarBackButtonHidden(false)
+        }
+        .navigationDestination(isPresented: $navigateToNotification) {
+            NotificationView()
+                .navigationBarBackButtonHidden(false)
+        }
     }
 }
 

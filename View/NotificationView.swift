@@ -2,6 +2,8 @@ import SwiftUI
 
 struct NotificationView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @State private var pushEnabled = true
     @State private var alertEnabled = true
     @State private var soundEnabled = true
@@ -11,10 +13,14 @@ struct NotificationView: View {
         ZStack {
             VStack {
                 HStack(spacing: 15) {
-                    Image("Back-Button-Black")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 48, height: 48)
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image("Back-Button-Black")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 48, height: 48)
+                    }
                     Text("Notification")
                         .font(Font.custom("Righteous", size: 20).weight(.heavy))
                         .foregroundColor(Color("PrimaryTextColor"))
@@ -49,6 +55,8 @@ struct NotificationView: View {
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 

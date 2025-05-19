@@ -1,14 +1,23 @@
 import SwiftUI
 
 struct SecuritySettingView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         ZStack {
             VStack {
                 HStack(spacing: 15) {
-                    Image("Back-Button-Black")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 48, height: 48)
+                    
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image("Back-Button-Black")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 48, height: 48)
+                    }
+                    
                     Text("Security")
                         .font(Font.custom("Righteous", size: 20).weight(.heavy))
                         .foregroundColor(Color("PrimaryTextColor"))
@@ -45,6 +54,8 @@ struct SecuritySettingView: View {
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 

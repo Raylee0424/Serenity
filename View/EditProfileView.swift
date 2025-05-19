@@ -2,6 +2,9 @@ import SwiftUI
 
 struct EditProfileView: View {
     
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var userData: UserData
+    
     @State private var username = ""
     @State private var email = ""
     @State private var location = ""
@@ -19,10 +22,14 @@ struct EditProfileView: View {
             
             VStack {
                 HStack(spacing: 15) {
-                    Image("Back-Button")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 48, height: 48)
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image("Back-Button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 48, height: 48)
+                    }
                     Text("Edit Profile")
                       .font(Font.custom("Righteous", size: 20).weight(.heavy))
                       .foregroundColor(.white)
@@ -41,7 +48,7 @@ struct EditProfileView: View {
                     .font(Font.custom("Righteous", size: 26))
                     .lineSpacing(32)
                     .foregroundColor(Color("PrimaryTextColor"))
-                  Text(verbatim: "luminegenshin@gmail.com")
+                  Text(userData.email)
                     .font(Font.custom("Righteous", size: 16))
                     .foregroundColor(Color("PrimaryTextColor"))
                   Text("Beijing, China")
@@ -74,9 +81,11 @@ struct EditProfileView: View {
         }
         .edgesIgnoringSafeArea(.all)
         .background(Color("WhiteBackground"))
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 
 #Preview {
-    EditProfileView()
+    EditProfileView(userData: UserData())
 }
