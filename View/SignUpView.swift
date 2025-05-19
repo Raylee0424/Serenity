@@ -2,60 +2,72 @@ import SwiftUI
 
 struct SignUpView: View {
     @ObservedObject var userData: UserData
-    
-    @State private var email = ""
-    @State private var password = ""
-    @State private var confirmpassword = ""
+    @StateObject private var viewModel = SignUpViewModel()
     @State private var navigateToSignIn = false
 
     var body: some View {
         VStack {
             TopBarView(title: "Sign Up")
                 .offset(x: 0, y: -2)
-                .padding(.bottom, 43)
-            
-            VStack(alignment: .leading, spacing: 27.44) {
+                .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 20 : 43)
+
+            VStack(alignment: .leading, spacing: 20) {
+                // Email Field
                 LoginInputFieldView(
-                    text: $email,
+                    text: $viewModel.email,
                     title: "Email Address",
                     inputLogo: "Monotone-Email",
                     placeholder: "Enter your email...",
                     rightLogo: "Solid-Chevron-Down",
                     isSecureField: false
                 )
-                
+                if let emailError = viewModel.emailError {
+                    ErrorFieldView(title: emailError)
+                }
+
+                // Password Field
                 LoginInputFieldView(
-                    text: $password,
+                    text: $viewModel.password,
                     title: "Password",
                     inputLogo: "Monotone-Email",
                     placeholder: "Enter your password...",
                     rightLogo: "Solid-Anatomy-Eye",
                     isSecureField: true
                 )
-                
+                if let passwordError = viewModel.passwordError {
+                    ErrorFieldView(title: passwordError)
+                }
+
+                // Confirm Password Field
                 LoginInputFieldView(
-                    text: $confirmpassword,
+                    text: $viewModel.confirmPassword,
                     title: "Confirm Password",
                     inputLogo: "Monotone-Email",
                     placeholder: "Confirm Password...",
                     rightLogo: "Solid-Anatomy-Eye",
                     isSecureField: true
                 )
+                if let confirmPasswordError = viewModel.confirmPasswordError {
+                    ErrorFieldView(title: confirmPasswordError)
+                }
+
+                Button {
+                    if viewModel.validateFields() {
+                        viewModel.signUp()
+                        navigateToSignIn = true
+                    }
+                } label: {
+                    LoginButtonView(title: "Sign Up")
+                }
+                .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 10 : 35)
             }
-            .padding(.bottom, 94)
-            
-            Button {
-                navigateToSignIn = true
-            } label: {
-                LoginButtonView(title: "Sign Up")
-                    .padding(.bottom, 35)
-            }
-            
+            .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 10 : 20)
+
             HStack(spacing: 4) {
                 Text("Have an account already?")
                     .font(Font.custom("Righteous-Regular", size: 18))
                     .foregroundColor(Color("DefaultTextColor"))
-                
+
                 Button {
                     navigateToSignIn = true
                 } label: {
@@ -76,7 +88,6 @@ struct SignUpView: View {
         }
     }
 }
-
 struct SignUpContentView: View {
     @StateObject private var userData = UserData()
 

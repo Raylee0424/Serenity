@@ -23,16 +23,20 @@ struct HomeView: View {
                     .foregroundColor(Color("PrimaryTextColor"))
                 Spacer()
             }
+            .padding(.horizontal, 30)
             VStack(spacing: 15) {
                 HStack() {
                     Text("Mood History")
                       .font(Font.custom("Righteous", size: 16))
                       .foregroundColor(Color("PrimaryTextColor"))
                     Spacer()
-                    Image("Solid-Horizontal-Blue")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
+                    
+                    NavigationLink(destination: CalendarMoodView()) {
+                        Image("Solid-Horizontal-Blue")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                    }
                 }
                 HStack(spacing: 17) {
                     ForEach(Array(zip(days, moodImages)), id: \.0) { day, moodImage in
@@ -123,24 +127,28 @@ struct HomeView: View {
             .cornerRadius(32)
             .shadow(color: Color(red: 0.29, green: 0.20, blue: 0.15, opacity: 0.05), radius: 16,y: 8)
             
-            HStack {
-                Text("Community Articles")
-                  .font(Font.custom("Righteous", size: 18))
-                  .foregroundColor(Color("PrimaryTextColor"))
+            VStack {
+                HStack {
+                    Text("Community Articles")
+                      .font(Font.custom("Righteous", size: 18))
+                      .foregroundColor(Color("PrimaryTextColor"))
+                    
+                    Spacer()
+                    
+                    Text("See All")
+                      .font(Font.custom("Righteous", size: 12))
+                      .foregroundColor(Color(red: 0.44, green: 0.42, blue: 0.40))
+                }
                 
-                Spacer()
-                
-                Text("See All")
-                  .font(Font.custom("Righteous", size: 12))
-                  .foregroundColor(Color(red: 0.44, green: 0.42, blue: 0.40))
-            }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    CommunityArticleView()
-                    CommunityArticleView()
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 6) {
+                        CommunityArticleView()
+                        CommunityArticleView()
+                    }
                 }
             }
+            .padding(.horizontal, 30)
+            
         }
         .padding(.horizontal, 16)
         .edgesIgnoringSafeArea(.all)

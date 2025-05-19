@@ -74,24 +74,26 @@ struct TabViewModel: View {
     @State private var selectedTab: Tab = .home
 
     var body: some View {
-        VStack(spacing: 0) {
-            Group {
-                switch selectedTab {
-                case .home:
-                    HomeView()
-                case .article:
-                    ArticleView()
-                case .music:
-                    ExerciseView()
-                case .profile:
-                    ProfileView(userData: userData)
+        NavigationStack {
+            VStack {
+                Group {
+                    switch selectedTab {
+                    case .home:
+                        HomeView()
+                    case .article:
+                        ArticleView()
+                    case .music:
+                        ExerciseView()
+                    case .profile:
+                        ProfileView(userData: userData)
+                    }
                 }
+                Spacer()
+                TabBarView(selectedTab: $selectedTab)
             }
-            Spacer()
-            TabBarView(selectedTab: $selectedTab)
+            .edgesIgnoringSafeArea(.bottom)
+            .background(Color("WhiteBackground"))
         }
-        .edgesIgnoringSafeArea(.bottom)
-        .background(Color("WhiteBackground"))
     }
 }
 

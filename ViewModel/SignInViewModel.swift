@@ -1,22 +1,20 @@
 import Foundation
 import Combine
 
-class SignUpViewModel: ObservableObject {
+class SignInViewModel: ObservableObject {
     
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var confirmPassword: String = ""
     
     @Published var emailError: String? = nil
     @Published var passwordError: String? = nil
-    @Published var confirmPasswordError: String? = nil
     
-    // Validation for all fields
+    // Validation logic
     func validateFields() -> Bool {
         var isValid = true
         
         // Email validation
-        if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if email.isEmpty {
             emailError = "Email is required"
             isValid = false
         } else if !isValidEmail(email) {
@@ -30,38 +28,24 @@ class SignUpViewModel: ObservableObject {
         if password.isEmpty {
             passwordError = "Password is required"
             isValid = false
-        } else if password.count < 6 {
-            passwordError = "Password must be at least 6 characters"
-            isValid = false
         } else {
             passwordError = nil
-        }
-        
-        // Confirm password validation
-        if confirmPassword.isEmpty {
-            confirmPasswordError = "Confirm password is required"
-            isValid = false
-        } else if confirmPassword != password {
-            confirmPasswordError = "Passwords do not match"
-            isValid = false
-        } else {
-            confirmPasswordError = nil
         }
         
         return isValid
     }
     
-    // Regex-based email validation
+    // Regex email validation
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
     }
     
-    // Simulated sign-up process
-    func signUp() {
+    // Simulate sign-in process
+    func signIn() {
         if validateFields() {
-            // Perform registration logic here
-            print("User signed up with email: \(email)")
+            // Proceed with sign in logic
+            print("Sign in with email: \(email) and password: \(password)")
         }
     }
 }
