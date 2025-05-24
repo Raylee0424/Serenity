@@ -3,13 +3,16 @@ import Combine
 
 class SignUpViewModel: ObservableObject {
     
-    @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var confirmPassword: String = ""
-    
-    @Published var emailError: String? = nil
-    @Published var passwordError: String? = nil
-    @Published var confirmPasswordError: String? = nil
+    @Published var firstName = ""
+        @Published var middleName = ""
+        @Published var lastName = ""
+        @Published var email = ""
+        @Published var password = ""
+        @Published var confirmPassword = ""
+        
+        @Published var emailError: String?
+        @Published var passwordError: String?
+        @Published var confirmPasswordError: String?
     
     // Validation for all fields
     func validateFields() -> Bool {

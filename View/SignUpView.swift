@@ -11,58 +11,93 @@ struct SignUpView: View {
                 .offset(x: 0, y: -2)
                 .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 20 : 43)
 
-            VStack(alignment: .leading, spacing: 20) {
-                // Email Field
-                LoginInputFieldView(
-                    text: $viewModel.email,
-                    title: "Email Address",
-                    inputLogo: "Monotone-Email",
-                    placeholder: "Enter your email...",
-                    rightLogo: "Solid-Chevron-Down",
-                    isSecureField: false
-                )
-                if let emailError = viewModel.emailError {
-                    ErrorFieldView(title: emailError)
-                }
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 20) {
 
-                // Password Field
-                LoginInputFieldView(
-                    text: $viewModel.password,
-                    title: "Password",
-                    inputLogo: "Monotone-Email",
-                    placeholder: "Enter your password...",
-                    rightLogo: "Solid-Anatomy-Eye",
-                    isSecureField: true
-                )
-                if let passwordError = viewModel.passwordError {
-                    ErrorFieldView(title: passwordError)
-                }
+                    // First Name
+                    LoginInputFieldView(
+                        text: $viewModel.firstName,
+                        title: "First Name",
+                        inputLogo: "Monotone-User",
+                        placeholder: "Enter your first name...",
+                        rightLogo: "",
+                        isSecureField: false
+                    )
 
-                // Confirm Password Field
-                LoginInputFieldView(
-                    text: $viewModel.confirmPassword,
-                    title: "Confirm Password",
-                    inputLogo: "Monotone-Email",
-                    placeholder: "Confirm Password...",
-                    rightLogo: "Solid-Anatomy-Eye",
-                    isSecureField: true
-                )
-                if let confirmPasswordError = viewModel.confirmPasswordError {
-                    ErrorFieldView(title: confirmPasswordError)
-                }
+                    // Middle Name
+                    LoginInputFieldView(
+                        text: $viewModel.middleName,
+                        title: "Middle Name",
+                        inputLogo: "Monotone-User",
+                        placeholder: "Enter your middle name...",
+                        rightLogo: "",
+                        isSecureField: false
+                    )
 
-                Button {
-                    if viewModel.validateFields() {
-                        viewModel.signUp()
-                        navigateToSignIn = true
+                    // Last Name
+                    LoginInputFieldView(
+                        text: $viewModel.lastName,
+                        title: "Last Name",
+                        inputLogo: "Monotone-User",
+                        placeholder: "Enter your last name...",
+                        rightLogo: "",
+                        isSecureField: false
+                    )
+
+                    // Email Field
+                    LoginInputFieldView(
+                        text: $viewModel.email,
+                        title: "Email Address",
+                        inputLogo: "Monotone-Email",
+                        placeholder: "Enter your email...",
+                        rightLogo: "Solid-Chevron-Down",
+                        isSecureField: false
+                    )
+                    if let emailError = viewModel.emailError {
+                        ErrorFieldView(title: emailError)
                     }
-                } label: {
-                    LoginButtonView(title: "Sign Up")
-                }
-                .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 10 : 35)
-            }
-            .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 10 : 20)
 
+                    // Password Field
+                    LoginInputFieldView(
+                        text: $viewModel.password,
+                        title: "Password",
+                        inputLogo: "Monotone-Email",
+                        placeholder: "Enter your password...",
+                        rightLogo: "Solid-Anatomy-Eye",
+                        isSecureField: true
+                    )
+                    if let passwordError = viewModel.passwordError {
+                        ErrorFieldView(title: passwordError)
+                    }
+
+                    // Confirm Password Field
+                    LoginInputFieldView(
+                        text: $viewModel.confirmPassword,
+                        title: "Confirm Password",
+                        inputLogo: "Monotone-Email",
+                        placeholder: "Confirm Password...",
+                        rightLogo: "Solid-Anatomy-Eye",
+                        isSecureField: true
+                    )
+                    if let confirmPasswordError = viewModel.confirmPasswordError {
+                        ErrorFieldView(title: confirmPasswordError)
+                    }
+
+                    // Sign Up Button
+                    Button {
+                        if viewModel.validateFields() {
+                            viewModel.signUp()
+                            navigateToSignIn = true
+                        }
+                    } label: {
+                        LoginButtonView(title: "Sign Up")
+                    }
+                    .padding(.bottom, (viewModel.emailError != nil || viewModel.passwordError != nil || viewModel.confirmPasswordError != nil) ? 10 : 35)
+                }
+                .padding(.horizontal, 16)
+            }
+
+            // Bottom Sign-In Link
             HStack(spacing: 4) {
                 Text("Have an account already?")
                     .font(Font.custom("Righteous-Regular", size: 18))
@@ -77,6 +112,7 @@ struct SignUpView: View {
                         .underline()
                 }
             }
+            .padding(.top, 10)
 
             Spacer()
         }

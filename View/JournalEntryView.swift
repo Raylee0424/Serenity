@@ -9,6 +9,7 @@ struct JournalEntryView: View {
             Color("WhiteBackground").ignoresSafeArea()
             
             VStack(alignment: .leading, spacing: 20) {
+                // Back button
                 Button(action: { dismiss() }) {
                     Image("Back-Button-Black")
                         .resizable()
@@ -16,6 +17,7 @@ struct JournalEntryView: View {
                         .frame(width: 48)
                 }
                 
+                // Header
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Your Entries")
                         .font(.custom("Righteous", size: 36))
@@ -23,21 +25,21 @@ struct JournalEntryView: View {
                         .font(.custom("Righteous", size: 18))
                 }
                 
-                VStack {
-                    Text("All Journals")
-                        .font(.custom("Righteous", size: 18).weight(.heavy))
-                    
-                    ScrollView {
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible())], spacing: 12) {
-                            ForEach(entries) { entry in
-                                JournalEntryPodView(entry: entry)
-                            }
+                // Section title
+                Text("All Journals")
+                    .font(.custom("Righteous", size: 18).weight(.heavy))
+                    .padding(.top, 10)
+
+                // Journal list
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(entries) { entry in
+                            JournalEntryPodView(entry: entry)
                         }
-                        .padding(.top, 16)
                     }
+                    .padding(.top, 8)
                 }
-                .padding(.top, 30)
-                
+
                 Spacer()
             }
             .padding(.horizontal, 16)

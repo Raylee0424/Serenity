@@ -16,6 +16,31 @@ struct HomeView: View {
             VStack(spacing: 10) {
                 HomeTopView()
                 
+                // Community Articles Section
+                VStack {
+                    HStack {
+                        Text("Community Articles")
+                            .font(Font.custom("Righteous", size: 18))
+                            .foregroundColor(Color("PrimaryTextColor"))
+                        
+                        Spacer()
+                        
+                        Text("See All")
+                            .font(Font.custom("Righteous", size: 12))
+                            .foregroundColor(Color(red: 0.44, green: 0.42, blue: 0.40))
+                    }
+                    
+                    // In HomeView.swift
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 6) {
+                            ForEach(sampleArticles) { article in
+                                CommunityArticleView(article: article)
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 30)
+                
                 // Recent Section
                 HStack {
                     Text("Recent")
@@ -140,30 +165,7 @@ struct HomeView: View {
                 }
                 .navigationBarBackButtonHidden()
                 
-                // Community Articles Section
-                VStack {
-                    HStack {
-                        Text("Community Articles")
-                            .font(Font.custom("Righteous", size: 18))
-                            .foregroundColor(Color("PrimaryTextColor"))
-                        
-                        Spacer()
-                        
-                        Text("See All")
-                            .font(Font.custom("Righteous", size: 12))
-                            .foregroundColor(Color(red: 0.44, green: 0.42, blue: 0.40))
-                    }
-                    
-                    // In HomeView.swift
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 6) {
-                            ForEach(sampleArticles) { article in
-                                CommunityArticleView(article: article)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 30)
+                
             }
             .padding(.horizontal, 16)
             .navigationDestination(isPresented: $showExerciseView) {
